@@ -6,14 +6,15 @@ import requests
 from . import __version__
 
 
-API_URL = "https://de.wikipedia.org/api/rest_v1/page/random/summary"
+API_URL = "https://{}.wikipedia.org/api/rest_v1/page/random/summary"
 
 
 @click.command()
+@click.option('-l', '--language', default='de', help='Language of Wikipedia edition')
 @click.version_option(version=__version__)
-def main():
+def main(language):
     """The modern Python project."""
-    with requests.get(API_URL) as response:
+    with requests.get(API_URL.format(language)) as response:
         response.raise_for_status()
         data = response.json()
 
